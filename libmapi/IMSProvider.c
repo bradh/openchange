@@ -91,6 +91,7 @@ static char *build_binding_string(struct mapi_context *mapi_ctx,
 				  struct mapi_profile *profile)
 {
 	char	*binding;
+	int	binding_len = 0;
 
 	/* Sanity Checks */
 	if (!profile) return NULL;
@@ -120,8 +121,13 @@ static char *build_binding_string(struct mapi_context *mapi_ctx,
 	if (profile->localaddr) {
 		binding = talloc_asprintf_append(binding, "localaddress=%s,", profile->localaddr);
 	}
-	
-	binding = talloc_strdup_append(binding, "]");
+	binding_len = strlen(binding);
+	if (binding[binding_len-1] == ',') {
+		binding[binding_len-1] = ']';
+	} else {
+		binding = talloc_strdup_append(binding, "]");
+	}
+	if (!binding) return NULL;
 
 	return binding;
 }
