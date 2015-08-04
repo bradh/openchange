@@ -419,19 +419,20 @@ _PUBLIC_ bool mapitest_oxcstor_GetReceiveFolderTable(struct mapitest *mt)
 {
 	mapi_object_t		obj_store;
 	struct SRowSet		SRowSet;
-	
+	enum MAPISTATUS		retval;
+
  	/* Step 1. Logon */
 	mapi_object_init(&obj_store);
-	OpenMsgStore(mt->session, &obj_store);
-	mapitest_print_retval(mt, "OpenMsgStore");
-	if (GetLastError() != MAPI_E_SUCCESS) {
+	retval = OpenMsgStore(mt->session, &obj_store);
+	mapitest_print_retval_clean(mt, "OpenMsgStore", retval);
+	if (retval != MAPI_E_SUCCESS) {
 		return false;
 	}
 
 	/* Step 2. Call the GetReceiveFolderTable operation */
-	GetReceiveFolderTable(&obj_store, &SRowSet);
-	mapitest_print_retval(mt, "GetReceiveFolderTable");
-	if (GetLastError() != MAPI_E_SUCCESS) {
+	retval = GetReceiveFolderTable(&obj_store, &SRowSet);
+	mapitest_print_retval_clean(mt, "GetReceiveFolderTable", retval);
+	if (retval != MAPI_E_SUCCESS) {
 		return false;
 	}
 
