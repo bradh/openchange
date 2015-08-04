@@ -99,11 +99,14 @@ static char *build_binding_string(struct mapi_context *mapi_ctx,
 	if (!mapi_ctx) return NULL;
 
 	if (profile->roh == true) {
-		binding = talloc_asprintf(mem_ctx, "ncacn_http:%s[rpcproxy=%s:%d,",
+		binding = talloc_asprintf(mem_ctx, "ncacn_http:%s[RpcProxy=%s:%d,HttpAuthOption=%s",
 				rpcserver, profile->roh_rpc_proxy_server,
-				profile->roh_rpc_proxy_port);
+				profile->roh_rpc_proxy_port,
+				profile->roh_http_auth);
 		if (profile->roh_tls == true) {
-			binding = talloc_strdup_append(binding, "tls,");
+			binding = talloc_strdup_append(binding, ",HttpUseTls=true,");
+		} else {
+			binding = talloc_strdup_append(binding, ",HttpUseTls=false,");
 		}
 	} else {
 		binding = talloc_asprintf(mem_ctx, "ncacn_ip_tcp:%s[", rpcserver);
