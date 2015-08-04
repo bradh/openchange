@@ -48,13 +48,13 @@ struct mapi_profile
 	const char	*realm;
 	const char	*server;
 	const char	*localaddr;
-	const char	*server_name;
 	bool		seal;
 	uint32_t	codepage;
 	uint32_t	language;
 	uint32_t	method;
 	uint32_t	exchange_version;
 	const char	*kerberos;
+	const char	*server_name;
 	bool		roh;
 	bool		roh_tls;
 	const char	*roh_rpc_proxy_server;
