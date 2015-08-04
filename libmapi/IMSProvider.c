@@ -98,7 +98,8 @@ static char *build_binding_string(struct mapi_context *mapi_ctx,
 	if (!mapi_ctx) return NULL;
 
 	if (profile->roh) {
-		binding = talloc_asprintf(mem_ctx, "ncacn_http:%s[", server);
+		binding = talloc_asprintf(mem_ctx, "ncacn_http:%s[rpcproxy=%s:%d,", server,
+				profile->server, 80);
 	} else {
 		binding = talloc_asprintf(mem_ctx, "ncacn_ip_tcp:%s[", server);
 	}
