@@ -44,12 +44,13 @@
 _PUBLIC_ bool mapitest_oxcstor_Logon(struct mapitest *mt)
 {
 	mapi_object_t		obj_store;
+	enum MAPISTATUS		retval;
 
 	/* Step 1. Logon Private Mailbox */
 	mapi_object_init(&obj_store);
-	OpenMsgStore(mt->session, &obj_store);
-	mapitest_print_retval(mt, "OpenMsgStore");
-	if (GetLastError() != MAPI_E_SUCCESS) {
+	retval = OpenMsgStore(mt->session, &obj_store);
+	mapitest_print_retval_clean(mt, "OpenMsgStore", retval);
+	if (retval != MAPI_E_SUCCESS) {
 		return false;
 	}
 	mapi_object_release(&obj_store);
@@ -57,8 +58,8 @@ _PUBLIC_ bool mapitest_oxcstor_Logon(struct mapitest *mt)
 	/* Step 2. Logon Public Folder store */
 	mapi_object_init(&obj_store);
 	OpenPublicFolder(mt->session, &obj_store);
-	mapitest_print_retval(mt, "OpenPublicFolder");
-	if (GetLastError() != MAPI_E_SUCCESS) {
+	mapitest_print_retval_clean(mt, "OpenPublicFolder", retval);
+	if (retval != MAPI_E_SUCCESS) {
 		return false;
 	}
 	mapi_object_release(&obj_store);
